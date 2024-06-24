@@ -2,7 +2,7 @@ import { useGlobal } from '../contexts/GlobalContext'
 import { NavLink, Link } from "react-router-dom";
 
 const Header = () => {
-    const { allRoutes, isLogged, setIsLogged } = useGlobal();
+    const { allRoutes, isLogged } = useGlobal();
     return (
         <nav className='d-flex'>
             <h1 className="m-4">React Form Blog</h1>

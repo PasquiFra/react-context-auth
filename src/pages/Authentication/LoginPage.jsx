@@ -1,27 +1,52 @@
-import { useGlobal } from '../../contexts/AuthContext'
-
+import { useGlobal as AuthGlobal } from '../../contexts/AuthContext'
+import { useEffect, useState } from "react";
+import { useGlobal as GlobalContext } from '../../contexts/GlobalContext'
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
 
-    const { login } = useGlobal()
+    const { login } = AuthGlobal()
+    const { previousPage, setError } = GlobalContext()
+    const navigate = useNavigate();
+
+    const defaultFormData = {
+        email: '',
+        password: ''
+    }
+
+    const [formData, setFormData] = useState(defaultFormData);
+
+    const handleInputField = (name, value) => {
+        setFormData(current => ({
+            ...current,
+            [name]: value
+        }));
+    }
 
     const handleLogin = event => {
         event.preventDefault();
-        console.log(event)
-        login(event.payload);
+
+        login(formData);
+
+        setFormData(defaultFormData)
+        navigate(previousPage);
     }
 
     return (
         <form onSubmit={handleLogin}>
             <input
                 type="text"
+                name='email'
                 placeholder="Email"
+                onChange={(event) => handleInputField('email', event.target.value)}
             />
             <input
                 type="password"
+                name="password"
                 placeholder="Password"
+                onChange={(event) => handleInputField("password", event.target.value)}
             />
-            <button className="btn btn-success">Effettua il Login</button>
+            <button type='submit' className="btn btn-success">Effettua il Login</button>
         </form>
     )
 }

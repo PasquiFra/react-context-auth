@@ -1,22 +1,39 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { useGlobal as GlobalState } from './GlobalContext'
+import { useGlobal as GlobalContext } from '../contexts/GlobalContext'
+
+import axios from 'axios'
 
 const AuthContext = createContext();
+const sendPostEndpoint = "http://localhost:3000/auth/login"
 
 const Auth = ({ children }) => {
 
-    const [isLogged, setIsLogged] = useState(false)
-    const { previousPage } = GlobalState()
+    const { previousPage, setError, isLogged, setIsLogged } = GlobalContext()
 
-    const login = (payload) => {
+    const login = async (payload) => {
+        try {
+            const response = await axios.post(sendPostEndpoint, payload)
+            const loginInfo = response.data
 
-        navigate(previousPage);
+            if (response.status === 200) {
+                console.log("entrato")
+                setIsLogged(true)
+            }
+
+            localStorage.setItem('token', loginInfo.token);
+            localStorage.setItem('username', JSON.stringify(loginInfo.data.username));
+            localStorage.setItem('email', JSON.stringify(loginInfo.data.email));
+
+        } catch (error) {
+            setError(error)
+        }
     }
 
     return (
         <AuthContext.Provider value={{
             isLogged,
-            setIsLogged
+            setIsLogged,
+            login
         }}>
             {children}
         </AuthContext.Provider>

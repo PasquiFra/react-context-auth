@@ -8,6 +8,7 @@ const GlobalState = ({ children }) => {
     const [tags, setTags] = useState([])
     const [error, setError] = useState(null);
     const [previousPage, setPreviousPage] = useState('/');
+    const [isLogged, setIsLogged] = useState(false);
 
     const allRoutes = [
         {
@@ -31,7 +32,6 @@ const GlobalState = ({ children }) => {
             const categories = await axios.get(categoriesEndpoint);
             const tags = await axios.get(tagsEndpoint);
 
-            console.log("entrato", categories.data, tags.data)
             setCategories(categories.data);
             setTags(tags.data);
         }
@@ -51,7 +51,9 @@ const GlobalState = ({ children }) => {
             setError,
             allRoutes,
             setPreviousPage,
-            previousPage
+            previousPage,
+            isLogged,
+            setIsLogged
         }}>
             {children}
         </GlobalContext.Provider>
