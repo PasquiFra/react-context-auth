@@ -4,7 +4,8 @@ import { useGlobal as GlobalContext } from '../contexts/GlobalContext'
 import axios from 'axios'
 
 const AuthContext = createContext();
-const sendPostEndpoint = "http://localhost:3000/auth/login"
+const loginEndpoint = "http://localhost:3000/auth/login"
+const registerEndpoint = "http://localhost:3000/auth/register"
 
 const Auth = ({ children }) => {
 
@@ -12,11 +13,11 @@ const Auth = ({ children }) => {
 
     const login = async (payload) => {
         try {
-            const response = await axios.post(sendPostEndpoint, payload)
+            const response = await axios.post(loginEndpoint, payload)
             const loginInfo = response.data
 
             if (response.status === 200) {
-                console.log("entrato")
+                console.log("login successful")
                 setIsLogged(true)
             }
 
@@ -29,11 +30,31 @@ const Auth = ({ children }) => {
         }
     }
 
+    const register = async (payload) => {
+        try {
+            const response = await axios.post(registerEndpoint, payload)
+            const registerInfo = response.data
+
+            if (response.status === 200) {
+                console.log("register successful")
+                setIsLogged(true)
+            }
+
+            localStorage.setItem('token', registerInfo.token);
+            localStorage.setItem('username', JSON.stringify(registerInfo.data.username));
+            localStorage.setItem('email', JSON.stringify(registerInfo.data.email));
+
+        } catch (error) {
+            setError(error)
+        }
+    }
+
     return (
         <AuthContext.Provider value={{
             isLogged,
             setIsLogged,
-            login
+            login,
+            register
         }}>
             {children}
         </AuthContext.Provider>

@@ -12,7 +12,7 @@ import ShowPostPage from "./pages/ShowPostPage"
 import PostsListPage from './pages/PostsListPage'
 import CreatePost from './pages/CreatePost'
 import SavePreviousPage from './pages/SavePrevPage.jsx';
-import LoginPage from "./pages/Authentication/LoginPage.jsx";
+import AuthPage from "./pages/AuthPage.jsx";
 
 
 function App() {
@@ -28,13 +28,19 @@ function App() {
 
               <Route index element={<HomePage />} />
 
-              <Route path="login" element={<LoginPage />} />
+              <Route path="auth">
+                <Route path="login" element={<AuthPage />} ></Route>
+                <Route path="register" element={<AuthPage />} ></Route>
+              </Route>
 
               <Route path="posts">
                 <Route index element={<PostsListPage />} />
 
+                {/* Rotte private */}
+
                 <Route path="create" element={<CreatePost />} />
                 <Route path=":slug" element={<ShowPostPage />} />
+
               </Route>
 
               <Route path="*" element={<NotFoundPage />} />

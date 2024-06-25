@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import { useGlobal as GlobalContext } from '../../contexts/GlobalContext'
 import { useNavigate } from 'react-router-dom';
 
-const LoginPage = () => {
+const Login = () => {
 
     const { login } = AuthGlobal()
-    const { previousPage, setError } = GlobalContext()
+    const { previousPage } = GlobalContext()
     const navigate = useNavigate();
 
     const defaultFormData = {
@@ -51,4 +51,4 @@ const LoginPage = () => {
     )
 }
 
-export default LoginPage
+export default Login

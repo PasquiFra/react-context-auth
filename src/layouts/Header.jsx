@@ -21,9 +21,9 @@ const Header = () => {
             <div>
                 {
                     isLogged ?
-                        <Link to={'/logout'} className='btn btn-danger'>Logout</Link>
+                        <Link to={'auth/logout'} className='btn btn-danger'>Logout</Link>
                         :
-                        <Link to={'/login'} className='btn btn-primary'>Login</Link>
+                        <Link to={'auth/login'} className='btn btn-primary'>Login</Link>
                 }
             </div>
         </nav>
