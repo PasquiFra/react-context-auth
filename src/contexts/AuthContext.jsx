@@ -61,7 +61,7 @@ const Auth = ({ children }) => {
     );
 }
 
-const useGlobal = () => {
+const useAuth = () => {
     const value = useContext(AuthContext);
     //se non sono in un consumer del GlobalContext.Provider, value sarà undefined
     if (value === undefined) {
@@ -70,4 +70,4 @@ const useGlobal = () => {
     return value;
 }
 
-export { Auth, useGlobal }
+export { Auth, useAuth }

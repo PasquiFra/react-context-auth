@@ -1,4 +1,4 @@
-import { useGlobal as AuthGlobal } from '../../contexts/AuthContext'
+import { useAuth as AuthGlobal } from '../../contexts/AuthContext'
 import { useEffect, useState } from "react";
 import { useGlobal as GlobalContext } from '../../contexts/GlobalContext'
 import { useNavigate } from 'react-router-dom';
