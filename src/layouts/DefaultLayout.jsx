@@ -3,6 +3,7 @@ import Footer from "./Footer"
 import Alert from '../components/Alert/Alert'
 import { Outlet, NavLink } from 'react-router-dom';
 import { useEffect, useState } from 'react'
+import { useGlobal } from '../contexts/GlobalContext';
 
 import axios from "axios";
 
@@ -10,7 +11,7 @@ const DefaultLayout = () => {
 
     const [posts, setPosts] = useState([]);
     const [images, setImages] = useState({});
-    const [error, setError] = useState(null);
+    const { error, setError } = useGlobal();
 
     const fetchPosts = async () => {
         const postsEndpoint = 'http://127.0.0.1:3000/posts'
@@ -19,8 +20,8 @@ const DefaultLayout = () => {
             if (fetchedPosts) {
                 setPosts(fetchedPosts)
             }
-        } catch (error) {
-            setError(error.message)
+        } catch (err) {
+            setError(err.message)
         }
     }
 
@@ -33,7 +34,7 @@ const DefaultLayout = () => {
             // salvataggio delle immagini
             setImages(prevImages => ({ ...prevImages, [slug]: image }));
 
-        } catch (error) {
+        } catch (err) {
             console.error("immagine non trovata")
         }
     }
@@ -49,6 +50,8 @@ const DefaultLayout = () => {
             }
         });
     }, [posts])
+
+
     return (
         <>
             <Header></Header>
@@ -56,7 +59,7 @@ const DefaultLayout = () => {
                 <Outlet />
             </main>
             <Footer></Footer>
-            <Alert error={error}></Alert>
+            <Alert></Alert>
         </>
     )
 }

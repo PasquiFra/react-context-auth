@@ -25,8 +25,9 @@ const Auth = ({ children }) => {
             localStorage.setItem('username', JSON.stringify(loginInfo.data.username));
             localStorage.setItem('email', JSON.stringify(loginInfo.data.email));
 
-        } catch (error) {
-            setError(error)
+        } catch (err) {
+            console.log("ho un errore", err)
+            setError(err.message)
         }
     }
 

@@ -48,6 +48,7 @@ const GlobalState = ({ children }) => {
         <GlobalContext.Provider value={{
             tags,
             categories,
+            error,
             setError,
             allRoutes,
             setPreviousPage,

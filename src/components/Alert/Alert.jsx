@@ -1,16 +1,32 @@
 import './alert.scss'
-import { useState } from 'react';
+import { useGlobal } from '../../contexts/GlobalContext';
+import { useEffect, useState } from "react";
 
-const Alert = ({ error }) => {
-    const [dismiss, setDismiss] = useState('')
+const Alert = () => {
+    const [dismiss, setDismiss] = useState(false)
+    const { error, setError } = useGlobal();
+
+    const dismissAlert = () => {
+        setDismiss(true)
+        setError(null)
+    }
+
+    useEffect(() => {
+        if (error) {
+            setDismiss(false);
+        }
+    }, [error])
 
     if (!error) {
-        return
+        return null;
     }
+
     return (
         <div className={`alert ${dismiss === true ? 'close' : ''}`}>
-            <h3>{error}</h3>
-            <button className='btn btn-danger' onClick={() => setDismiss(true)}>Dismiss</button>
+            <ul>
+                <li>{error}</li>
+            </ul>
+            <button className='btn btn-danger' onClick={dismissAlert}>Dismiss</button>
         </div>
     )
 }
